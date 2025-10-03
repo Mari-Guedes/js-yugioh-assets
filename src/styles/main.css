@@ -35,7 +35,7 @@
     height: 100vh;
 }
 
-.container-left {
+.container__left {
     width: 35%;
     min-width: 300px;
     flex-direction: column;
@@ -43,7 +43,7 @@
     justify-content: space-around;
 }
 
-.container-right {
+.container__right {
     width: 65%;
 
 }
@@ -79,7 +79,7 @@
 }
 
 .card-box__container {
-    height: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

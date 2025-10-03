@@ -21,8 +21,8 @@ const state = {
 };
 
 const playerSides = {
-    player1: "player-fieldside-card",
-    computer: "computer-fieldside-card",
+    player1: "player-cards",
+    computer: "computer-cards",
 }
 
 const pathImages = "./src/assets/icons/";
@@ -64,7 +64,7 @@ async function getRandomCardId() {
 async function createCardImage(IdCard, fieldSide){
     const cardImage = document.createElement("img");
     cardImage.setAttribute("height", "100px");
-    cardImage.setAttribute("src", ".src/assets/icons/card-back.png");
+    cardImage.setAttribute("src", "./src/assets/icons/card-back.png");
     cardImage.setAttribute("data-id", IdCard);
     cardImage.classList.add("card");
 
@@ -77,7 +77,9 @@ async function createCardImage(IdCard, fieldSide){
 
     cardImage.addEventListener("mouseover", ()=> {
         drawSelectCard(IdCard);
-    })
+    });
+
+    return cardImage;
 
 }
 
@@ -92,8 +94,8 @@ async function drawCard(cardNumbers, fieldSide) {
 }
 
 function init() {
-    drawCard(5, "playerSides.player1");
-    drawCard(5, "computerSides.computer");  
+    drawCard(5, playerSides.player1);
+    drawCard(5, playerSides.computer);  
 }
 
 init();
