@@ -15,17 +15,24 @@ const state = {
         player: document.getElementById("player-field-card"),
         computer: document.getElementById("computer-field-card"),
     },
+    playerSides : {
+        player1: "player-cards",
+        player1BOX: document.querySelector("#player-cards"),
+        computer : "computer-cards",
+        computerBOX: document.querySelector("#computer-cards")
+
+    },
     actions: {
         button: document.getElementById("next-duel"),
     },
 };
 
+const pathImages = "./src/assets/icons/";
+
 const playerSides = {
     player1: "player-cards",
     computer: "computer-cards",
 }
-
-const pathImages = "./src/assets/icons/";
 
 const cardData = [
     {
@@ -70,17 +77,56 @@ async function createCardImage(IdCard, fieldSide){
 
 
     if(fieldSide === playerSides.player1) {
+        
+        cardImage.addEventListener("mouseover", ()=> {
+            drawSelectCard(IdCard);
+        
+        });
+        
         cardImage.addEventListener("click", ()=>{
-            setCardsField(cardImage.getAttribute("data-id"));
-    });
-}
+            setCardsField(cardImage.getAttribute("data-id")); 
 
-    cardImage.addEventListener("mouseover", ()=> {
-        drawSelectCard(IdCard);
-    });
+         });
+    }
 
     return cardImage;
 
+}
+
+async function setCardsField(cardId) {
+    await removeAllCardsImages();
+
+    let computerCardId = await getRandomCardId;
+
+    state.fieldCards.player.style.display = "block";
+    state.fieldCards.computer.style.display = "block";
+    
+    state.fieldCards.player.src = cardData[cardId].img;
+    state.fieldCards.computer.src = cardData[cardId].img;
+
+   let duelResults = await checkDuelResults(cardId, computerCardId)
+
+    await updateScore();
+    await drawButton(duelResults);
+}
+
+async function removeAllCardsImages() {
+    let cards = state.playerSides.computerBOX
+    let imgElements = cards.querySelectorAll("img");
+    imgElements.forEach((img) => img.remove());
+
+    cards = state.playerSides.player1BOX
+    imgElements = cards.querySelectorAll("img");
+    imgElements.forEach((img) => img.remove());
+
+
+};
+    
+
+async function drawSelectCard(index) {
+    state.cardSprites.avatar.src = cardData[index].img;
+    state.cardSprites.name.innerText = cardData[index].name;
+    state.cardSprites.type.innerText = "Attribute : " + cardData[index].type;
 }
 
 async function drawCard(cardNumbers, fieldSide) {
